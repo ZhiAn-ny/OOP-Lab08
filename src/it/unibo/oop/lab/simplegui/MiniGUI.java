@@ -4,16 +4,22 @@
 package it.unibo.oop.lab.simplegui;
 
 import java.awt.BorderLayout;
+import java.awt.Canvas;
+import java.awt.Component;
+import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Random;
 
+import javax.accessibility.AccessibleContext;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
 
 /**
  * This class is a simple application that writes a random number on a file.
@@ -28,7 +34,6 @@ public class MiniGUI {
     private static final int PROPORTION = 5;
     private final Random rng = new Random();
     private final JFrame frame = new JFrame(TITLE);
-    private final JFrame newFrame = new JFrame("Ex 01.01");
 
     /**
      * 
@@ -36,16 +41,19 @@ public class MiniGUI {
     public MiniGUI() {
         final JPanel canvas = new JPanel();
         canvas.setLayout(new BorderLayout());
+        final JButton write = new JButton("Print a random number on standard output");
+        canvas.add(write, BorderLayout.CENTER);
 
         final JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
-        final JButton button = new JButton("This is my new button :)");
+        final JButton button = new JButton("This button does nothing");
         panel.add(button);
-        newFrame.add(panel);
-        newFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        canvas.add(panel, BorderLayout.EAST);
 
-        final JButton write = new JButton("Print a random number on standard output");
-        canvas.add(write, BorderLayout.CENTER);
+        final JTextField result = new JTextField("Result");
+        result.setEditable(false);
+        canvas.add(result, BorderLayout.NORTH);
+
         frame.setContentPane(canvas);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         /*
@@ -54,9 +62,12 @@ public class MiniGUI {
         write.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(final ActionEvent e) {
-                System.out.println(rng.nextInt());
+                final int rnd = rng.nextInt();
+                System.out.println(rnd);
+                result.setText("Result: " + rnd);
             }
         });
+
     }
 
     private void display() {
@@ -72,6 +83,10 @@ public class MiniGUI {
         final int sw = (int) screen.getWidth();
         final int sh = (int) screen.getHeight();
         frame.setSize(sw / PROPORTION, sh / PROPORTION);
+        /*
+         * Resize frame to the minimum size needed to display its content
+         */
+        frame.pack();
         /*
          * Instead of appearing at (0,0), upper left corner of the screen, this
          * flag makes the OS window manager take care of the default positioning
