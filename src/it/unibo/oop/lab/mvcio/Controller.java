@@ -69,10 +69,12 @@ public class Controller {
      * @param input a string to save on the current file.
      * @throws IOException
      */
-    public void saveToFile(final String input) throws IOException {
-        final FileWriter writer = new FileWriter(currentFile);
-        writer.write(input);
-        writer.close();
+    public void saveToFile(final String input) {
+        try (FileWriter writer = new FileWriter(currentFile)) {
+            writer.write(input);
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
 }
