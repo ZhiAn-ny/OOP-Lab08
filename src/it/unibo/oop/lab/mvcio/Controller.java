@@ -35,7 +35,7 @@ public class Controller {
 
     public Controller() {
         this.currentFile = new File(System.getProperty("user.home") 
-                + System.getProperty("file.separator") + "outpu.txt"); 
+                + System.getProperty("file.separator") + "output.txt"); 
     }
 
     /**
