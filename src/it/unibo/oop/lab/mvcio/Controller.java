@@ -1,9 +1,14 @@
 package it.unibo.oop.lab.mvcio;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+
 /**
  * 
  */
 public class Controller {
+    private File currentFile;
 
     /*
      * This class must implement a simple controller responsible of I/O access. It
@@ -27,5 +32,47 @@ public class Controller {
      * System.getProperty("file.separator"). The combined use of those methods leads
      * to a software that runs correctly on every platform.
      */
+
+    public Controller() {
+        this.currentFile = new File(System.getProperty("user.home") 
+                + System.getProperty("file.separator") + "outpu.txt"); 
+    }
+
+    /**
+     * A method for setting a File as current file.
+     * 
+     * @param file to set as current file
+     */
+    public void setFile(final File file) {
+        this.currentFile = file;
+    }
+
+    /**
+     * 
+     * @return the current file
+     */
+    public File getFile() {
+        return this.currentFile;
+    }
+
+    /**
+     * 
+     * @return the path of the current associated file.
+     */
+    public String getFilePath() {
+        return this.currentFile.getPath();
+    }
+
+    /**
+     * Saves on the current file the content of the passed string.
+     * 
+     * @param input a string to save on the current file.
+     * @throws IOException
+     */
+    public void saveToFile(final String input) throws IOException {
+        final FileWriter writer = new FileWriter(currentFile);
+        writer.write(input);
+        writer.close();
+    }
 
 }

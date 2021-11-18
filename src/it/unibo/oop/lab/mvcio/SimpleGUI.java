@@ -59,4 +59,8 @@ public final class SimpleGUI {
         frame.setLocationByPlatform(true);
     }
 
+    public void main(final String[] args) {
+        frame.setVisible(true);
+    }
+
 }
