@@ -80,11 +80,11 @@ public class BadIOGUI {
             public void actionPerformed(final ActionEvent e) {
                 try {
                     final File file = new File(PATH);
-                    final Scanner sc = new Scanner(file);
-                    while (sc.hasNextLine()) {
-                      System.out.println(sc.nextLine());
+                    try (Scanner sc = new Scanner(file)) {
+                        while (sc.hasNextLine()) {
+                          System.out.println(sc.nextLine());
+                        }
                     }
-                    sc.close();
                 } catch (FileNotFoundException e1) {
                     JOptionPane.showMessageDialog(frame, e1, "Error", JOptionPane.ERROR_MESSAGE);
                     e1.printStackTrace();
